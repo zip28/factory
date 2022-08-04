@@ -53,8 +53,11 @@
     <UnityVersion>2020.3.26f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scenes\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scenes\Scripts\ConveyorManager.cs" />
+    <Compile Include="Assets\Scripts\ConvejerManager.cs" />
+    <Compile Include="Assets\Scripts\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\CameraView.cs" />
+    <Compile Include="Assets\Scripts\Matrix.cs" />
+    <Compile Include="Assets\Scripts\GraphicsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
