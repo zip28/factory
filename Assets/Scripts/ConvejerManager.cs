@@ -93,6 +93,6 @@ public class ConvejerManager : MonoBehaviour
         float scale = CameraView.solo.scale;
         int x = (int)(belt.Position.x * scale);
         int y = (int)(belt.Position.y * scale);
-        Graphics.DrawTexture(new Rect(32 ,32 ,32 ,32), beltTextures[0]);
+        Graphics.DrawTexture(new Rect(x ,y ,scale ,scale), beltTextures[0]);
     }
 }
