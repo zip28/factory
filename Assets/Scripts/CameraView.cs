@@ -6,6 +6,10 @@ public class CameraView : MonoBehaviour
 {
     public static CameraView solo;
     public Vector2 cameraPose = new Vector2(0.5f, 0.5f);
+    public Vector2Int Offset 
+    {
+        get => new Vector2Int((int)(cameraPose.x * Matrix.size * scale), (int)(cameraPose.y * Matrix.size * scale));
+    }
     public float scale = 32; // cell in pixels
     public float speed = 2; // in cells
 
@@ -16,6 +20,6 @@ public class CameraView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cameraPose += new Vector2(Input.GetAxis("Horizontal") * speed / Matrix.size, Input.GetAxis("Vertical") * speed / Matrix.size) * scale;
+        cameraPose += new Vector2(Input.GetAxis("Horizontal") * speed / Matrix.size, -Input.GetAxis("Vertical") * speed / Matrix.size) * scale;
     }
 }

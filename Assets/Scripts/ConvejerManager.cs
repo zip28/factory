@@ -23,15 +23,15 @@ using UnityEngine;
         direct = (2 - direction.y) + Mathf.Abs(direction.x) * (direction.x - 3);
         
         inp = new Queue<Vector2Int>();
-        number = 0;//ConvejerManager.belts.Count;
-        if (Matrix.type[position.x + Direction.x,position.y + Direction.y] != 0)
+        number = ConvejerManager.solo.belts.Count;
+        if (Matrix.solo.type[position.x + Direction.x,position.y + Direction.y] != 0)
         {
-            ConvejerManager.ends.Add(this);
+            ConvejerManager.solo.ends.Add(this);
         }
-        ConvejerManager.belts.Add(this);
-        foreach (Vector2Int dir in Matrix.directions)
+        ConvejerManager.solo.belts.Add(this);
+        foreach (Vector2Int dir in Matrix.solo.directions)
         {
-            if (dir != Direction && Matrix.type[position.x + dir.x,position.y + dir.y] != 0)
+            if (dir != Direction && Matrix.solo.type[position.x + dir.x,position.y + dir.y] != 0)
             {
                 inp.Enqueue(dir);
             }
@@ -43,12 +43,16 @@ using UnityEngine;
 public class ConvejerManager : MonoBehaviour
 {
     public static ConvejerManager solo;
-    public static List<Belt> belts = new List<Belt>();
-    public static List<Belt> ends = new List<Belt>();
+    public List<Belt> belts = new List<Belt>();
+    public List<Belt> ends = new List<Belt>();
     public List<Texture> beltTextures; 
     void Awake()
     {
         solo = this;
+        
+    }
+    private void Start()
+    {
         belts.Add(new Belt(Vector2Int.up, new Vector2Int(1, 1)));
     }
     private void Update()
@@ -57,8 +61,8 @@ public class ConvejerManager : MonoBehaviour
     }
     private void Take(Belt conv)
     {
-        conv.item = ConvejerManager.belts[Matrix.machine[conv.Position.x + conv.inp.Dequeue().x,conv.Position.y + conv.inp.Dequeue().y]].item;
-        Send(ConvejerManager.belts[Matrix.machine[conv.Position.x + conv.inp.Dequeue().x,conv.Position.y + conv.inp.Dequeue().y]]);
+        conv.item = ConvejerManager.solo.belts[Matrix.solo.machine[conv.Position.x + conv.inp.Dequeue().x,conv.Position.y + conv.inp.Dequeue().y]].item;
+        Send(ConvejerManager.solo.belts[Matrix.solo.machine[conv.Position.x + conv.inp.Dequeue().x,conv.Position.y + conv.inp.Dequeue().y]]);
     }
 
     private int Send(Belt conv)
@@ -91,8 +95,8 @@ public class ConvejerManager : MonoBehaviour
     public void Draw(Belt belt)
     {
         float scale = CameraView.solo.scale;
-        int x = (int)(belt.Position.x * scale);
-        int y = (int)(belt.Position.y * scale);
+        int x = (int)(belt.Position.x * scale) + CameraView.solo.Offset.x;
+        int y = (int)(belt.Position.y * scale) + CameraView.solo.Offset.y;
         Graphics.DrawTexture(new Rect(x ,y ,scale ,scale), beltTextures[0]);
     }
 }
